@@ -1,2 +1,2 @@
 # LLP
-Examples and Exercises from the book "Low Level Programming"
+Examples and solutions to exercises from the book "Low Level Programming"
