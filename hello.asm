@@ -12,5 +12,5 @@ _start:
   syscall
 
   mov rax, 60      ; exit system call
-  xor rdi, rdi     ; 0
+  xor rdi, rdi     ; arg#1 - 0
   syscall

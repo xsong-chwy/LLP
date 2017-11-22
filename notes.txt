@@ -1,0 +1,51 @@
+* Chapter 02 *
+
+0. File descriptors
+stdin  - 0
+stdout - 1
+stderr - 2
+
+1. Section and labels are case sensitive, local labels starts with dot
+
+2. Directives:
+- times n cmd: repeat cmd n times in code
+
+3. System call convention:
+rax - sys call number
+arg registers: rdi, rsi, rdx, r10, r8, r9
+syscall changes rcx and r11
+write system call number is 1
+
+db - bytes (1)
+dw - words (2)
+dd - double words (4)
+dq - quad words (8)
+
+4. test vs cmp (both modifies eflags)
+cmp - use subtraction
+test - use logical and (faster)
+set reg to zero fast:  xor reg reg
+test reg is zero fast: test reg reg
+
+5. Conditional jump
+ja/jb - for unsigned
+jg/jl - for signed
+je/jne - for both
+
+6. Function call convention:
+First six arguments: rdi, rsi, rdx, rcx, r8, r9
+rest arguments: on stack in reverse order
+callee saved: rbx, rbp, rsp, r12-r15
+caller saved: others
+return values: rax, rdx
+
+7. big endian vs little endian
+- big endian: least significant byte first
+- little endian: most significant byte first
+Intel x64 uses little endian
+
+8. when writing into memory, need to specify data length
+mov byte[start], 1
+mov wordtart], 1
+mov dword[start], 1
+mov qword[start], 1

@@ -4,43 +4,50 @@ newline_char: db 10
 codes: db '0123456789abcdef'
 
 section .text
-global _start
+global _test, print_hex, print_newline
 
 print_newline:
-  mov rax, 1
-  mov rdi, 1
-  mov rsi, newline_char
-  mov rdx, 1
+  mov rax, 1             
+  mov rdi, 1             ; syscall arg #1 - file descriptor
+  mov rsi, newline_char  ; syscall arg #2 - start address
+  mov rdx, 1             ; syscall arg #3 - length
   syscall
   ret
 
 print_hex:
-  mov rax, rdi
-  mov rdi, 1
-  mov rdx, 1
-  mov rcx, 64
+  mov rax, rdi           ; copy rdi, need rdi for system call           
+  mov rdi, 1             ; syscall arg #1 - file descriptor
+  mov rdx, 1             ; syscall arg #3 - length
+  mov rcx, 64            ; shift amount
 
 .loop:
+  push rax
+
   sub rcx, 4
-  push rax  
   sar rax, cl
   and rax, 0xf
-  lea rsi, [codes + rax]
+  lea rsi, [codes + rax]  ; syscall arg #2 - start address
+  
   mov rax, 1
   push rcx
-  syscall
+  syscall                 ; write syscall
   pop rcx
+  
   pop rax
 
   test rcx, rcx
   jnz .loop
   ret
 
-_start:
+_test:
+  ; prepare arguments
   mov rdi, 0x1122334455667788
   call print_hex
+
+  ; no arguments
   call print_newline
 
+  ; exit
   mov rax, 60
   xor rdi, rdi
   syscall
