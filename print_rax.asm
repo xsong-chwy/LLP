@@ -1,12 +1,13 @@
 section .data
-codes:
-  db  '0123456789ABCDEF', 10
+codes: db '0123456789ABCDEF'
+num:   db 0x99,0x00,0x00,0x99
 
 section .text
 global _start
 _start:
-  mov rax, 0x1122334455667788 ; test data
-
+  ;mov rax, 0x1122334455667788 ; test data
+  mov rax, 0xffff
+  mov rax, [num]
   mov rdi, 1  ; file descriptor
   mov rdx, 1  ; arg #3 of write syscall
   mov rcx, 64 ; # of bits to shift

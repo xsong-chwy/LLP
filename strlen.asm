@@ -1,29 +1,26 @@
 global _start
 
 section .data
-
-test_str: db 'abcdefg', 0
-
+test_str: db 'hello, assembly',10,0
 
 section .text
-
 strlen:
-	xor rax, rax  ; return value is stored in rax
+  xor rax, rax
 
 .loop:
-	cmp byte[rdi + rax], 0 ; rdi stores start address
+  cmp byte[rdi+rax], 0
+  je .end
 
-	je .end
-	inc rax
-	jmp .loop
+  inc rax
+  jmp .loop
 
 .end:
-	ret
+  ret
 
 _start:
-	mov rdi, test_str
-	call strlen
-
-	mov rdi, rax
-	mov rax, 60
-	syscall
+  mov rdi, test_str
+  call strlen
+  
+  mov rdi, rax
+  mov rax, 60
+  syscall
